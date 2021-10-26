@@ -120,14 +120,14 @@ int main(int argc, char** argv) {
     bool print_line_number;
     char pattern[SIZE_CMD];
 
-    if (argv[1] == NULL) {
-        usage("myfgrep.c");
-        return(EXIT_FAILURE);
-    }
     // Checks for optional arguments
     int i;
     int count = 1;
     for (i = 1; i <= 2; i++) {
+        if (argv[i] == NULL) {
+            usage("myfgrep.c");
+        return(EXIT_FAILURE);
+        }
         if (strcmp(argv[i], "-i") == 0) {
             ignore_case = true;
             count++;
@@ -137,29 +137,27 @@ int main(int argc, char** argv) {
         }
     }
 
-    if (argv[count] == NULL) {
-        usage("myfgrep.c");
-        return(EXIT_FAILURE);
-    }
-
     if (strstr(argv[count], ".txt") != NULL) {
         strcat(pattern, " ");
     } else {
         strcat(pattern, argv[count]);
         count++;
+        if (argv[count] == NULL) {
+            usage("myfgrep.c");
+            return(EXIT_FAILURE);
+        }
         while (strstr(argv[count], ".txt") == NULL) {
             char temp[SIZE_CMD - sizeof(pattern)];
             strcat(temp, " ");
             strcat(temp, argv[count]);
             strcat(pattern, temp);
             *temp = '\0';
-           count++;
+            count++;
+            if (argv[count] == NULL) {
+                usage("myfgrep.c");
+                return(EXIT_FAILURE);
+            }
         }
-    }
-
-    if (argv[1] == NULL) {
-        usage("myfgrep.c");
-        return(EXIT_FAILURE);
     }
 
     // Stores a list of all the filenames passed as arguments
