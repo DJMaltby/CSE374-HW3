@@ -6,7 +6,7 @@
 // Imitates the grep tool:
 //  User passes in a string pattern and a list of filenames as arguments.
 //  Parses through each file to search for an occurence of that pattern.
-//  If the pattern is found, the entire line it was found in is 
+//  If the pattern is found, the entire line it was found in is
 //  printed to stdout.
 // Optional arguments:
 //      -i : Ignores case when searching for the pattern
@@ -83,7 +83,7 @@ void print_matches_in_file(FILE* file, char* pattern,
 //  - ignore_case:       whether to ignore case when using the pattern
 //  - print_line_number: whether to print the line number for each matching line
 void print_all_matches(int num_files, char** filename_list, char* pattern,
-                       bool ignore_case, bool print_line_number) {                     
+                       bool ignore_case, bool print_line_number) {
     int i;
     FILE* file;
     char* filename;
@@ -97,7 +97,8 @@ void print_all_matches(int num_files, char** filename_list, char* pattern,
             fprintf(stderr, "Could not open file: %s\n", filename);
         } else {
             printf("%s:\n", filename);
-            print_matches_in_file(file, pattern, ignore_case, print_line_number);
+            print_matches_in_file(file, pattern, ignore_case, 
+            print_line_number);
         }
     }
 }
@@ -143,20 +144,14 @@ int main(int argc, char** argv) {
     }
 
     if (strstr(argv[count], ".txt") != NULL) {
-        strcat(pattern, " ");
+        snprintf(pattern, 2, " ");
     } else {
-        strcat(pattern, argv[count]);
-        count++;
         if (argv[count] == NULL) {
             usage("myfgrep.c");
             return(EXIT_FAILURE);
         }
         while (strstr(argv[count], ".txt") == NULL) {
-            char temp[SIZE_CMD - sizeof(pattern)];
-            strcat(temp, " ");
-            strcat(temp, argv[count]);
-            strcat(pattern, temp);
-            *temp = '\0';
+            snprintf(pattern, sizeof(argv[count]), " %s", argv[count]);
             count++;
             if (argv[count] == NULL) {
                 usage("myfgrep.c");
@@ -176,7 +171,8 @@ int main(int argc, char** argv) {
     }
 
     // For each file, prints every line of text where the pattern is found
-    print_all_matches(index, filename_list, pattern, ignore_case, print_line_number);
+    print_all_matches(index, filename_list, pattern, ignore_case, 
+                      print_line_number);
 
     return(EXIT_SUCCESS);
 }
