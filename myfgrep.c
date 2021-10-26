@@ -97,7 +97,7 @@ void print_all_matches(int num_files, char** filename_list, char* pattern,
             fprintf(stderr, "Could not open file: %s\n", filename);
         } else {
             printf("%s:\n", filename);
-            print_matches_in_file(file, pattern, ignore_case, 
+            print_matches_in_file(file, pattern, ignore_case,
             print_line_number);
         }
     }
@@ -177,7 +177,7 @@ int main(int argc, char** argv) {
     }
 
     // For each file, prints every line of text where the pattern is found
-    print_all_matches(index, filename_list, pattern, ignore_case, 
+    print_all_matches(index, filename_list, pattern, ignore_case,
                       print_line_number);
 
     return(EXIT_SUCCESS);
