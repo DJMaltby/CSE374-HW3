@@ -137,6 +137,11 @@ int main(int argc, char** argv) {
         }
     }
 
+    if (argv[count] == NULL) {
+        usage("myfgrep.c");
+        return(EXIT_FAILURE);
+    }
+
     if (strstr(argv[count], ".txt") != NULL) {
         strcat(pattern, " ");
     } else {
