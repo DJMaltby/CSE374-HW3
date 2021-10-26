@@ -1,3 +1,4 @@
+// Copyright (c) 2021 David Maltby
 // David Maltby
 // 10/28/21
 // CSE 374 - HW3
@@ -5,7 +6,8 @@
 // Imitates the grep tool:
 //  User passes in a string pattern and a list of filenames as arguments.
 //  Parses through each file to search for an occurence of that pattern.
-//  If the pattern is found, the entire line it was found in is printed to stdout.
+//  If the pattern is found, the entire line it was found in is 
+//  printed to stdout.
 // Optional arguments:
 //      -i : Ignores case when searching for the pattern
 //      -n : Prints the line number along with the line
@@ -64,8 +66,6 @@ void print_matches_in_file(FILE* file, char* pattern,
     while (fgets(copy1, sizeof(copy1), file) != NULL) {
         lineNum++;
         copy_string(copy2, copy1, sizeof(copy1), ignore_case);
-        //printf("%s\n", p);
-        //printf("%s\n", copy2);
         if (strstr(copy2, p) != NULL) {
             if (print_line_number) {
                 printf("(%d) ", lineNum);
@@ -120,6 +120,10 @@ int main(int argc, char** argv) {
     bool print_line_number;
     char pattern[SIZE_CMD];
 
+    if (argv[1] == NULL) {
+        usage("myfgrep.c");
+        return(EXIT_FAILURE);
+    }
     // Checks for optional arguments
     int i;
     int count = 1;
@@ -151,6 +155,11 @@ int main(int argc, char** argv) {
             *temp = '\0';
            count++;
         }
+    }
+
+    if (argv[1] == NULL) {
+        usage("myfgrep.c");
+        return(EXIT_FAILURE);
     }
 
     // Stores a list of all the filenames passed as arguments
