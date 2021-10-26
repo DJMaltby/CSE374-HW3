@@ -119,8 +119,6 @@ int main(int argc, char** argv) {
     bool ignore_case;
     bool print_line_number;
     char pattern[SIZE_CMD];
-    // char pattern[SIZE_CMD];
-   // int pos = 0;
 
     // Checks for optional arguments
     int i;
@@ -136,70 +134,24 @@ int main(int argc, char** argv) {
     }
 
     if (argv[count] == NULL) {
+        fprintf(stderr, "Not enough arguments\n");
         return(1);
     }
-
-    // printf("check\n");
 
     if (strstr(argv[count], ".txt") != NULL) {
         strcat(pattern, " ");
     } else {
         strcat(pattern, argv[count]);
-        // pattern = argv[count];
-        // printf("%s\n", pattern);
         count++;
         while (strstr(argv[count], ".txt") == NULL) {
             char temp[SIZE_CMD - sizeof(pattern)];
             strcat(temp, " ");
-            // printf("check1\n");
             strcat(temp, argv[count]);
-            // printf("temp: %s\n", temp);
-            // printf("%s\n", temp);
             strcat(pattern, temp);
-            // printf("pattern: %s\n", pattern);
             *temp = '\0';
-            // printf("pattern: %s\n", pattern);
-            //printf("check3\n");
-           // strcat(temp, argv[count]);      // problem line
-           // printf("check3\n");
-           // strcat(pattern, temp);
-           // char* temp = (" %s", argv[count]);
-           // strcat(pattern, temp);
-           // pos += sprintf(&pattern[pos], " %s", argv[count]);
-           //char* temp = "";
-           //sprintf(temp, " %s", argv[count]);
-           //strcat(pattern, temp);
            count++;
-           /* if (strstr(argv[count + 1], ".txt") == NULL) {
-                char* temp = "";
-                sprintf(temp, "%s %s", argv[count], argv[count + 1]);
-                count++;
-            } else {
-                sprintf(pattern, "%s", argv[count]);
-                count++;
-            } */
         }
-        /*char* temp;
-        temp = argv[count];
-        printf("%s\n", pattern);
-        count++;
-        while (strstr(argv[count + 1], ".txt") == NULL) {
-            if (sizeof(pattern) <= SIZE_CMD) {
-                sprintf(pattern, "%s %s", argv[count], argv[count + 1]);
-                //strcat(pattern, argv[count]);
-                //strcat(pattern, argv[count]);
-                printf("%s\n", pattern);
-                count++;
-            }
-        } */
     }
-
-    // printf("%s\n", pattern);
-
-    // This has to be somewhere in above loop
-    //if (argv[count] == NULL) {
-    //    return(1);
-    //}
 
     // Stores a list of all the filenames passed as arguments
     char* filename_list[SIZE];
