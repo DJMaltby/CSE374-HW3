@@ -134,8 +134,8 @@ int main(int argc, char** argv) {
     }
 
     if (argv[count] == NULL) {
-        fprintf(stderr, "Not enough arguments\n");
-        return(1);
+        usage("myfgrep.c");
+        return(EXIT_FAILURE);
     }
 
     if (strstr(argv[count], ".txt") != NULL) {
