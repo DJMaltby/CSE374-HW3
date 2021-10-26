@@ -144,14 +144,20 @@ int main(int argc, char** argv) {
     }
 
     if (strstr(argv[count], ".txt") != NULL) {
-        snprintf(pattern, 2, " ");
+        strcat(pattern, " ");
     } else {
+        strcat(pattern, argv[count]);
+        count++;
         if (argv[count] == NULL) {
             usage("myfgrep.c");
             return(EXIT_FAILURE);
         }
         while (strstr(argv[count], ".txt") == NULL) {
-            snprintf(pattern, sizeof(argv[count]), " %s", argv[count]);
+            char temp[SIZE_CMD - sizeof(pattern)];
+            strcat(temp, " ");
+            strcat(temp, argv[count]);
+            strcat(pattern, temp);
+            *temp = '\0';
             count++;
             if (argv[count] == NULL) {
                 usage("myfgrep.c");
@@ -176,3 +182,4 @@ int main(int argc, char** argv) {
 
     return(EXIT_SUCCESS);
 }
+
